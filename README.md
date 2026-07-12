@@ -1,11 +1,14 @@
 # draw2plot
 
-Un plotter graphique automatisé open-source (2 axes X/Y + stylo) piloté depuis un PC. Budget matériel estimé : **moins de 30€**.
+Interface et plotter graphique automatisé open-source (2 axes X/Y + stylo) piloté depuis un PC. Budget matériel estimé : **moins de 30€**.
 
 ![Status](https://img.shields.io/badge/status-en%20développement-yellow) ![Licence](https://img.shields.io/badge/licence-MIT-blue) ![Budget](https://img.shields.io/badge/budget%20matériel-%3C30€-green)
 
 > Tu dessines à la souris sur une interface processing, le robot trace sur papier — avec pause stylo, reprise exacte et communication sécurisée par checksum.
 
+Projet inspiré par : 
+- [mertArduino miniCNC plotter](https://www.instructables.com/Arduino-Mini-CNC-Plotter/)
+- [Niklas Roy Graffomat](https://www.niklasroy.com/graffomat/)
 ---
 
 ## Table des matières
