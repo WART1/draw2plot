@@ -13,15 +13,12 @@ Un plotter graphique automatisé open-source (2 axes X/Y + stylo) piloté depuis
 1. [Concept](#concept)
 2. [Matériel requis](#matériel-requis)
 3. [Câblage électronique](#câblage-électronique)
-4. [Structure du projet](#structure-du-projet)
-5. [Protocole de communication](#protocole-de-communication)
-6. [Algorithme de tracé (Bresenham)](#algorithme-de-tracé-bresenham)
-7. [Interface graphique](#interface-graphique)
-8. [Machine à états](#machine-à-états)
-9. [Format de fichier .PLT](#format-de-fichier-plt)
-10. [Installation](#installation)
-11. [Dépannage](#dépannage)
-12. [Contribuer](#contribuer)
+4. [Protocole de communication](#protocole-de-communication)
+5. [Algorithme de tracé (Bresenham)](#algorithme-de-tracé-bresenham)
+6. [Interface graphique](#interface-graphique)
+7. [Machine à états](#machine-à-états)
+8. [Installation](#installation)
+9. [Contribuer](#contribuer)
 
 ---
 
@@ -64,21 +61,6 @@ L'Arduino renvoie un signal de validation (ACK) à Processing **uniquement lorsq
 > ⚠️ **Point critique — masse commune :** relie impérativement la borne négative (−) de ton alimentation externe 5V à la broche **GND** de l'Arduino. Sans cette liaison, les signaux n'ont pas de référence et les moteurs agissent de manière erratique.
 
 ---
-
-## Structure du projet
-
-```
-DRAW2PLOT/
-├── DRAW2PLOT_Processing/        # Interface graphique (Master)
-│   ├── DRAW2PLOT_Processing.pde # Fichier source principal
-│   └── data/                    # Icônes UI (play.png, trash.png…)
-├── DRAW2PLOT_Arduino/           # Firmware contrôleur (Slave)
-│   └── DRAW2PLOT_Arduino.ino   # Code C++ Arduino
-└── README.md
-```
-
----
-
 ## Protocole de communication
 
 La communication série est **asynchrone avec acquittement (ACK)**, sécurisée par checksum. Chaque message fait exactement **6 octets** :
@@ -151,22 +133,6 @@ L'impression est pilotée par la variable `printStatus` dans la boucle `draw()` 
 Le **buffer d'impression** (`printXP`, `printYP`…) est figé au clic sur PRINT — l'utilisateur peut continuer à dessiner ou tout effacer sans perturber le tracé en cours.
 
 ---
-
-## Format de fichier `.PLT`
-
-DRAW2PLOT utilise un sous-ensemble du format HPGL. L'espace de coordonnées est **1100 × 1100** unités.
-
-```
-IN;           ← Initialisation
-SP1;          ← Sélection stylo 1
-PU100,200;    ← Déplacement stylo levé vers (100, 200)
-PD150,300;    ← Déplacement stylo posé vers (150, 300)
-PU0,0;        ← Retour HOME
-SP0;          ← Fin
-```
-
----
-
 ## Installation
 
 ### Processing (interface graphique)
@@ -185,30 +151,12 @@ SP0;          ← Fin
 VS Code avec le Workspace fourni permet de compiler et lancer Processing via `Ctrl + Shift + B` (nécessite `processing-java` dans le PATH).
 
 ---
-
-## Dépannage
-
-| Symptôme | Cause probable | Solution |
-|---|---|---|
-| La fenêtre d'enregistrement s'ouvre en boucle | `exportFile()` appelée au mauvais endroit | Vérifier que `exportFile()` n'est déclenchée que par `pressPlay()`, jamais directement par le bouton |
-| Le plotter s'arrête brusquement | Perte d'octet ou checksum invalide | Vérifier que l'Arduino envoie bien `Serial.write(6)` après chaque mouvement accompli |
-| Les moteurs bougent de manière erratique | Masse commune manquante | Relier le GND de l'alimentation externe au GND de l'Arduino |
-
----
-
 ## Contribuer
 
 Les contributions sont les bienvenues ! Quelques pistes identifiées :
 
-- Optimisation de l'ordre de tracé (algorithme du voyageur de commerce)
-- Import de formats vectoriels supplémentaires (SVG, DXF)
-
-Pour contribuer :
-1. Fork le dépôt
-2. Crée une branche (`git checkout -b feature/ma-fonctionnalite`)
-3. Commit (`git commit -m 'Ajout de ...'`)
-4. Push et ouvre une Pull Request
-
+- Optimisation de l'ordre de tracé
+- Ajout d'un bouton Stop hardware
 ---
 
 ## Licence
